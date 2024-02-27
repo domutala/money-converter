@@ -1,0 +1,265 @@
+<script lang="ts" setup>
+const rate = {
+  table: "latest",
+  rates: {
+    AED: 3.672975,
+    AFN: 72.50001,
+    ALL: 95.615675,
+    AMD: 405.798167,
+    ANG: 1.801734,
+    AOA: 830.171333,
+    ARS: 841.076175,
+    AUD: 1.528024,
+    AWG: 1.8,
+    AZN: 1.7,
+    BAM: 1.80083,
+    BBD: 2,
+    BDT: 109.718191,
+    BGN: 1.803509,
+    BHD: 0.376914,
+    BIF: 2860.097145,
+    BMD: 1,
+    BND: 1.342989,
+    BOB: 6.923158,
+    BRL: 4.936023,
+    BSD: 1,
+    BTC: 0.000017645817,
+    BTN: 82.815207,
+    BTS: 132.38018913,
+    BWP: 13.751226,
+    BYN: 3.271567,
+    BZD: 2.015008,
+    CAD: 1.35283,
+    CDF: 2769.429867,
+    CHF: 0.878607,
+    CLF: 0.035616,
+    CLP: 981.048863,
+    CNH: 7.213724,
+    CNY: 7.1981,
+    COP: 3943.934476,
+    CRC: 514.333759,
+    CUC: 1,
+    CUP: 25.75,
+    CVE: 101.71401,
+    CZK: 23.35136,
+    DASH: 0.03112356,
+    DJF: 177.762377,
+    DKK: 6.87308,
+    DOGE: 10.22808633,
+    DOP: 58.72546,
+    DZD: 134.404315,
+    EGP: 30.901038,
+    ERN: 15,
+    ETB: 56.714017,
+    ETH: 0.0003078661,
+    EUR: 0.922113,
+    FJD: 2.2649,
+    FKP: 0.788336,
+    GBP: 0.788336,
+    GEL: 2.66,
+    GGP: 0.788336,
+    GHS: 12.557726,
+    GIP: 0.788336,
+    GMD: 67.9,
+    GNF: 8593.699098,
+    GTQ: 7.80248,
+    GYD: 209.158767,
+    HKD: 7.82427,
+    HNL: 24.753134,
+    HRK: 6.947429,
+    HTG: 132.709658,
+    HUF: 360.420192,
+    IDR: 15659.320481,
+    ILS: 3.608145,
+    IMP: 0.788336,
+    INR: 82.902149,
+    IQD: 1309.761581,
+    IRR: 42055,
+    ISK: 137.69,
+    JEP: 0.788336,
+    JMD: 155.842018,
+    JOD: 0.709,
+    JPY: 150.50641008,
+    KES: 144.581598,
+    KGS: 89.43,
+    KHR: 4074.902903,
+    KMF: 453.950304,
+    KPW: 900,
+    KRW: 1332.295613,
+    KWD: 0.307678,
+    KYD: 0.833084,
+    KZT: 449.96779,
+    LAK: 20863.83516,
+    LBP: 89595.009009,
+    LD: 320,
+    LKR: 310.468609,
+    LRD: 190.800075,
+    LSL: 19.104271,
+    LTC: 0.0134517084,
+    LYD: 4.834615,
+    MAD: 10.064712,
+    MDL: 17.79727,
+    MGA: 4535.497374,
+    MKD: 56.768405,
+    MMK: 2099.342033,
+    MNT: 3450,
+    MOP: 8.057345,
+    MRO: 356.999828,
+    MRU: 39.886241,
+    MUR: 45.709512,
+    MVR: 15.4,
+    MWK: 1682.860186,
+    MXN: 17.063988,
+    MYR: 4.782,
+    MZN: 63.875002,
+    NAD: 19.10433,
+    NGN: 1574.750384,
+    NIO: 36.78362,
+    NOK: 10.533292,
+    NPR: 132.504023,
+    NXT: 369.059921212,
+    NZD: 1.620657,
+    OMR: 0.384937,
+    PAB: 1,
+    PEN: 3.800356,
+    PGK: 3.775877,
+    PHP: 56.085218,
+    PKR: 279.5,
+    PLN: 3.97075,
+    PYG: 7278.367615,
+    QAR: 3.6405,
+    RON: 4.579926,
+    RSD: 108.059633,
+    RUB: 92.02853,
+    RWF: 1282.220256,
+    SAR: 3.750432,
+    SBD: 8.475185,
+    SCR: 13.52145,
+    SDG: 601,
+    SEK: 10.300673,
+    SGD: 1.343995,
+    SHP: 0.788336,
+    SLL: 20969.5,
+    SOS: 571.397138,
+    SRD: 35.303,
+    SSP: 130.26,
+    STD: 22281.8,
+    STN: 22.786237,
+    STR: 8.178822,
+    SVC: 8.746852,
+    SYP: 2512.53,
+    SZL: 19.146488,
+    THB: 35.875519,
+    TJS: 10.95645,
+    TMT: 3.51,
+    TND: 3.11975,
+    TOP: 2.362582,
+    TRY: 31.145396,
+    TTD: 6.785966,
+    TWD: 31.616364,
+    TZS: 2549.60927,
+    UAH: 38.27014,
+    UGX: 3930.727384,
+    USD: 1,
+    UYU: 39.068248,
+    UZS: 12498.061606,
+    VEF_BLKMKT: 10.4,
+    VEF_DICOM: 8.82,
+    VEF_DIPRO: 529.62,
+    VES: 36.025539,
+    VND: 24634.593979,
+    VUV: 118.722,
+    WST: 2.8,
+    XAF: 604.866439,
+    XAG: 0.04453124,
+    XAU: 0.00049251,
+    XCD: 2.70255,
+    XDR: 0.753256,
+    XMR: 0.0080009049,
+    XOF: 604.866439,
+    XPD: 0.00106606,
+    XPF: 110.037344,
+    XPT: 0.00112179,
+    XRP: 1.71394293,
+    YER: 250.349961,
+    ZAR: 19.090098,
+    ZMW: 23.192904,
+    ZWL: 322,
+    NMC: 0.6583052534,
+    PPC: 1.2681920972,
+    NVC: 4.1334737071,
+    XPM: 4.8789734625,
+    EAC: 1463.0791964769,
+    VTC: 2.1090018835,
+    EMC: 15.3254221404,
+    FCT: 0.741747612,
+  },
+  lastupdate: "2024-02-27T22:34:59.407000+00:00",
+};
+</script>
+
+<template>
+  <v-container>
+    <svg-icon name="flag/xof" width="32px" height="32px" />
+
+    <div class="mc-input border rounded-lg">
+      <input type="number" />
+      <v-select
+        hide-details
+        flat
+        variant="solo"
+        style="width: 170px"
+        :items="Object.keys(rate.rates)"
+      >
+        <template #chip="{ item }">
+          <svg-icon
+            :name="`flag/${item.value}`"
+            width="32px"
+            height="32px"
+            class="mr-2"
+          />
+          {{ item.value }}
+        </template>
+
+        <template v-slot:item="{ props, item }">
+          <v-list-item v-bind="props" width="310">
+            <template #prepend>
+              <svg-icon
+                :name="`flag/${item.value}`"
+                width="32px"
+                height="32px"
+                class="mr-2"
+              />
+            </template>
+          </v-list-item>
+        </template>
+      </v-select>
+    </div>
+  </v-container>
+</template>
+
+<style lang="scss">
+.mc-input {
+  border-width: 2px !important;
+  display: flex;
+  align-items: center;
+
+  > input {
+    outline: none;
+    height: 100%;
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &:focus-within {
+    --v-border-opacity: 1px;
+  }
+}
+</style>
