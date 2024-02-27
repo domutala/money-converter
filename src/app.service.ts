@@ -9,27 +9,36 @@ export class AppService {
   async convert(value: number, from: string, to: string) {
     const rate = await this.rate();
 
-    if (from === rate.base) {
-      if (to === rate.base) {
-        return value;
-      } else if (rate.rates[to]) {
-        return value * rate.rates[to];
+    const tos = to.split(';');
+    const result: { [x: string]: number } = {};
+
+    function _convert(to: string) {
+      if (from === rate.base) {
+        if (to === rate.base) {
+          return value;
+        } else if (rate.rates[to]) {
+          return value * rate.rates[to];
+        } else {
+          throw `Rate for ${to} not found.`;
+        }
+      } else if (to === rate.base) {
+        if (rate.rates[from]) {
+          return value / rate.rates[from];
+        } else {
+          throw `Rate for ${from} not found.`;
+        }
       } else {
-        throw `Rate for ${to} not found.`;
-      }
-    } else if (to === rate.base) {
-      if (rate.rates[from]) {
-        return value / rate.rates[from];
-      } else {
-        throw `Rate for ${from} not found.`;
-      }
-    } else {
-      if (rate.rates[from] && rate.rates[to]) {
-        return (value / rate.rates[from]) * rate.rates[to];
-      } else {
-        throw `Rate for ${from} or ${to} not found.`;
+        if (rate.rates[from] && rate.rates[to]) {
+          return (value / rate.rates[from]) * rate.rates[to];
+        } else {
+          throw `Rate for ${from} or ${to} not found.`;
+        }
       }
     }
+
+    for (const to of tos) result[to] = _convert(to);
+
+    return result;
   }
 
   async rate(base?: string) {
