@@ -1,0 +1,19 @@
+name: CI
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    env:
+      SSH_USER: ${{ vars.SSH_USER }}
+      SSH_SERVER: ${{ vars.SSH_SERVER }}
+    steps:
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
+
+      - name: Trigger Service on Debian Server
+        run: ssh ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'your_command_to_start_service'
+
+      - run: echo "The workflow is now ready to test your code on the runner."
