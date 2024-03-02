@@ -20,6 +20,6 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             echo ${{ secrets.PROJECT_FOLDER}}/${{ env.BRANCHE_NAME }}/webapp
-            cd ${{ secrets.PROJECT_FOLDER}}/${{ env.BRANCHE_NAME }}/webapp
+            cd ${{ secrets.PROJECT_FOLDER}}/dev/webapp
             yarn
             # sudo systemctl restart money-manager.api.${{env.BRANCHE_NAME}}.service
