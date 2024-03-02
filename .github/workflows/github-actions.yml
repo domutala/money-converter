@@ -6,19 +6,16 @@ on:
       - dev
 jobs:
   Explore-GitHub-Actions:
-    runs-on: ubuntu-latest
+    runs-on: vps101713
     env:
       SSH_USER: ${{ vars.SSH_USER }}
       SSH_SERVER: ${{ vars.SSH_SERVER }}
 
     steps:
-      - name: Create SSH key
-        run: echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
 
       - name: Trigger Service on Debian Server
-        run: ssh -i ~/.ssh/id_rsa.pub ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'echo hey'
+        run: ssh ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'echo hey'
 
         # run: ssh ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'sudo systemctl restart money-manager.api.service'
 
