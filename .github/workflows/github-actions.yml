@@ -6,16 +6,26 @@ on:
       - dev
 jobs:
   Explore-GitHub-Actions:
-    runs-on: vps101713
+    runs-on: ubuntu-latest
     env:
       SSH_USER: ${{ vars.SSH_USER }}
       SSH_SERVER: ${{ vars.SSH_SERVER }}
 
     steps:
+      - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{secrets.SSH_PRIVATE_KEY}}" > ../private.key
+          sudo chmod 600 ../private.key
+        shell: bash
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_KEY_PATH: ${{ github.workspace }}/../private.key
+
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
 
       - name: Trigger Service on Debian Server
-        run: ssh ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'echo hey'
+        run: ssh  -i $SSH_KEY_PATH ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'echo hey'
 
         # run: ssh ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'sudo systemctl restart money-manager.api.service'
 
