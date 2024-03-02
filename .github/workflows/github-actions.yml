@@ -12,8 +12,6 @@ jobs:
       BRANCHE_NAME: ${GITHUB_REF#refs/heads/}
 
     steps:
-      - run: echo ${GITHUB_REF#refs/heads/}
-      - run: echo ${{env.BRANCHE_NAME}}
       - name: executing remote ssh commands using password
         uses: appleboy/ssh-action@master
         with:
