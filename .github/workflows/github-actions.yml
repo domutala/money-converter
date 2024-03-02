@@ -15,4 +15,5 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            sudo systemctl restart money-manager.api.${{ github.ref }}.service
+            echo ${GITHUB_REF#refs/heads/}
+            sudo systemctl restart money-manager.api.${GITHUB_REF#refs/heads/}.service
