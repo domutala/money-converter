@@ -25,7 +25,7 @@ jobs:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
 
       - name: Trigger Service on Debian Server
-        run: ssh  -i $SSH_KEY_PATH ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'echo hey'
+        run: ssh  -i ~/.ssh/private.key ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'echo hey'
 
         # run: ssh ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'sudo systemctl restart money-manager.api.service'
 
