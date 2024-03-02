@@ -10,7 +10,9 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
+    "@flaticon/flaticon-uicons": "^3.1.0",
     "@nuxtjs/svg-sprite": "^1.0.2",
+    "@pinia/nuxt": "^0.5.1",
     "currency-flags": "^4.0.7",
     "nuxt": "^3.10.3",
     "vue": "^3.4.19",
@@ -18,6 +20,7 @@
   },
   "devDependencies": {
     "@mdi/font": "^7.4.47",
+    "@nuxtjs/i18n": "^8.1.1",
     "sass": "^1.71.1",
     "vuetify-nuxt-module": "^0.12.0"
   }

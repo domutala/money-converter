@@ -196,44 +196,133 @@ const rate = {
   },
   lastupdate: "2024-02-27T22:34:59.407000+00:00",
 };
+
+const emit = defineEmits<{ (e: "update:modelValue", value?: number): void }>();
+
+const input = ref<HTMLInputElement>();
+const value = ref("");
+const currency = ref<string>();
+const { tm } = useI18n();
+const textFilter = ref("");
+const _rateFilters = computed(() => {
+  const curencyLocales = tm("currency") as { [x: string]: string };
+
+  return Object.keys(rate.rates).filter((rate) => {
+    const inRate = rate.toLowerCase().includes(textFilter.value.toLowerCase());
+    if (inRate) return true;
+
+    const locale = curencyLocales[rate];
+    if (!locale) return false;
+
+    return locale.toLowerCase().includes(textFilter.value.toLowerCase());
+  });
+});
+
+watch(
+  () => value.value,
+  () => {
+    if (!input.value) return;
+
+    const amount = input.value.value.replace(/\s/g, "").replace(",", ".");
+    if (!amount) {
+      emit("update:modelValue", 0);
+      return;
+    }
+
+    const p = amount.split(".");
+    const p1 = p[0].split("").reverse();
+    const p2 = p[1];
+
+    let step = 0;
+    const r1: string[] = [];
+
+    p1.forEach((p) => {
+      step++;
+      r1.push(p);
+      if (step === 3) {
+        step = 0;
+        r1.push(" ");
+      }
+    });
+
+    let result = r1.reverse().join("").trim();
+
+    if (amount.includes(".")) {
+      result += ",";
+      if (p2) result += ` ${p2}`;
+    }
+
+    value.value = result;
+    emit("update:modelValue", Number(amount));
+  }
+);
 </script>
 
 <template>
   <v-container>
-    <svg-icon name="flag/xof" width="32px" height="32px" />
-
     <div class="mc-input border rounded-lg">
-      <input type="number" />
       <v-select
         hide-details
+        hide-spin-buttons
         flat
         variant="solo"
-        style="width: 170px"
-        :items="Object.keys(rate.rates)"
+        style="width: 140px"
+        :menu-props="{ class: 'mc-input--select-content' }"
+        :items="_rateFilters"
+        v-model="currency"
       >
         <template #chip="{ item }">
-          <svg-icon
-            :name="`flag/${item.value}`"
-            width="32px"
-            height="32px"
-            class="mr-2"
-          />
+          <v-img
+            :src="`/flag/${item.value}.svg`"
+            style="width: 24px; height: 24px; margin-right: 10px"
+          >
+            <template #error> </template>
+          </v-img>
           {{ item.value }}
         </template>
 
         <template v-slot:item="{ props, item }">
           <v-list-item v-bind="props" width="310">
             <template #prepend>
-              <svg-icon
-                :name="`flag/${item.value}`"
-                width="32px"
-                height="32px"
-                class="mr-2"
-              />
+              <v-img
+                :src="`/flag/${item.value}.svg`"
+                style="width: 24px; height: 24px; margin-right: 10px"
+              >
+                <template #error> </template>
+              </v-img>
+            </template>
+
+            <template #title>
+              {{ item.value }} - {{ $t(`currency.${item.value}`) }}
             </template>
           </v-list-item>
         </template>
+
+        <template #prepend-item>
+          <div
+            class="pa-2 bg-background border-b"
+            style="position: sticky; top: 0; z-index: 10"
+          >
+            <v-text-field
+              variant="outlined"
+              placeholder="Rechercher"
+              v-model="textFilter"
+              hide-details
+            >
+              <template #prepend-inner>
+                <i class="fi fi-rr-search mr-2" style="font-size: 18px"></i>
+              </template>
+            </v-text-field>
+          </div>
+        </template>
       </v-select>
+      <input
+        inputmode="decimal"
+        placeholder="0.00"
+        ref="input"
+        v-model="value"
+        :disabled="!currency"
+      />
     </div>
   </v-container>
 </template>
@@ -243,23 +332,40 @@ const rate = {
   border-width: 2px !important;
   display: flex;
   align-items: center;
+  overflow: hidden;
+  background-color: rgba(var(--v-theme-background), 1);
+
+  .v-field__append-inner {
+    display: none;
+  }
 
   > input {
     outline: none;
-    height: 100%;
+    height: 56px;
     width: 100%;
     padding-left: 10px;
     padding-right: 10px;
-
+    background-color: transparent;
+    text-align: right;
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
       -webkit-appearance: none;
       margin: 0;
     }
+
+    &:focus {
+      background-color: rgba(var(--v-theme-on-background), 0.02);
+    }
   }
 
   &:focus-within {
     --v-border-opacity: 1px;
+  }
+}
+
+.mc-input--select-content {
+  .v-list {
+    padding: 0 !important;
   }
 }
 </style>
