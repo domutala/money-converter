@@ -1,24 +1,17 @@
-name: CI
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+name: Remote update execution
 on:
   push:
     branches:
       - dev
 jobs:
-  Explore-GitHub-Actions:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-    env:
-      SSH_USER: ${{ vars.SSH_USER }}
-      SSH_SERVER: ${{ vars.SSH_SERVER }}
-
     steps:
-      - name: Create SSH key
-        run: echo "${{secrets.SSH_PRIVATE_KEY}}" > ~/.ssh/private.key
-      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
-
-      - name: Trigger Service on Debian Server
-        run: ssh  -i ~/.ssh/private.key ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'echo hey'
-
-        # run: ssh ${{ env.SSH_USER }}@${{ env.SSH_SERVER }} 'sudo systemctl restart money-manager.api.service'
-
-      - run: echo "The workflow is now ready to test your code on the runner."
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: echo hey
