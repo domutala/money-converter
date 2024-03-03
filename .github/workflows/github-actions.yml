@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      BRANCHE_NAME: ${GITHUB_REF#refs/heads/}
+      BRANCHE_NAME: ${GITHUB_REF##*/}
 
     steps:
       - name: executing remote ssh commands using password
@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            echo ${{ secrets.PROJECT_FOLDER}}/${{ env.BRANCHE_NAME }}/webapp
+            echo ${{ env.BRANCHE_NAME }}
 
             cd ${{ secrets.PROJECT_FOLDER}}/dev/webapp
             yarn
@@ -28,3 +28,4 @@ jobs:
             yarn
 
             # sudo systemctl restart money-manager.api.${{env.BRANCHE_NAME}}.service
+            # sudo systemctl restart money-manager.webapp.${{env.BRANCHE_NAME}}.service
