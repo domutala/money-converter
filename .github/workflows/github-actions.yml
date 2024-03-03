@@ -16,13 +16,14 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ${{ secrets.PROJECT_FOLDER}}/${{ github.ref_name}}/api
-            git pull
-            yarn
+            cd ${{ secrets.PROJECT_FOLDER}}/${{ github.ref_name }}/api
+            sudo git pull
+            sudo yarn
+            sudo yarn build
 
-            # cd ${{ secrets.PROJECT_FOLDER}}/${{ github.ref_name}}/webapp
+            # cd ${{ secrets.PROJECT_FOLDER}}/${{ github.ref_name }}/webapp
             # git pull
             # yarn
 
-            sudo systemctl restart money-manager.api.${{ github.ref_name}}.service
+            # sudo systemctl restart money-manager.api.${{ github.ref_name}}.service
             # sudo systemctl restart money-manager.webapp.${{ github.ref_name}}.service
