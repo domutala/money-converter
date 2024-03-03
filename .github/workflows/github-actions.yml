@@ -22,8 +22,8 @@ jobs:
             sudo yarn build
 
             # cd ${{ secrets.PROJECT_FOLDER}}/${{ github.ref_name }}/webapp
-            # git pull
-            # yarn
+            # sudo git pull
+            # sudo yarn
 
-            # sudo systemctl restart money-manager.api.${{ github.ref_name}}.service
+            sudo systemctl restart money-manager.api.${{ github.ref_name}}.service
             # sudo systemctl restart money-manager.webapp.${{ github.ref_name}}.service
