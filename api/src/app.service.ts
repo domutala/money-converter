@@ -38,7 +38,7 @@ export class AppService {
 
     for (const to of tos) result[to] = _convert(to);
 
-    return result;
+    return { result, rate: await this.rate(from) };
   }
 
   async rate(base?: string) {

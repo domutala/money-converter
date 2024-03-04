@@ -10,7 +10,6 @@ export class AppController {
     @Query('to') to: string,
     @Query('from') from: string,
     @Query('value') value: string,
-    @Query('base') base: string,
   ) {
     return this.appService.convert(Number(value), from, to);
   }

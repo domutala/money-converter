@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "nuxt dev --host",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -22,6 +22,8 @@
   "devDependencies": {
     "@mdi/font": "^7.4.47",
     "@nuxtjs/i18n": "^8.1.1",
+    "@pinia-plugin-persistedstate/nuxt": "^1.2.0",
+    "dayjs-nuxt": "^2.1.9",
     "sass": "^1.71.1",
     "vuetify-nuxt-module": "^0.12.0"
   }
