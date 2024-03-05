@@ -7,10 +7,8 @@ export class AppService {
   constructor(private readonly httpService: HttpService) {}
 
   async convert(value: string, from: string, to: string) {
-    const _value = Number(value);
-
     if (
-      typeof _value !== 'string' ||
+      typeof value !== 'string' ||
       typeof from !== 'string' ||
       typeof to !== 'string'
     ) {
@@ -18,7 +16,7 @@ export class AppService {
     }
 
     const rate = await this.rate();
-
+    const _value = Number(value);
     const tos = to.split(';');
     const result: { [x: string]: number } = {};
 
