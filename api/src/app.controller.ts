@@ -5,7 +5,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('/')
+  @Get('/api/')
   convert(
     @Query('to') to: string,
     @Query('from') from: string,
@@ -14,7 +14,7 @@ export class AppController {
     return this.appService.convert(value, from, to);
   }
 
-  @Get('/rate')
+  @Get('/api/rate')
   rate(@Query('base') base: string) {
     return this.appService.rate(base);
   }
