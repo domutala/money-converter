@@ -1,4 +1,13 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import useRateStore from "./store/rate";
+
+const rateStore = useRateStore();
+
+onMounted(() => {
+  rateStore.setIsConverting(false);
+  rateStore.resetConvertDate();
+});
+</script>
 
 <template>
   <v-app>

@@ -118,6 +118,14 @@ export const useRateStore = defineStore(
       }
     }
 
+    function setIsConverting(value: boolean) {
+      isConverting.value = value;
+    }
+
+    function resetConvertDate() {
+      lastConvertDate.value = new Date();
+    }
+
     return {
       availables,
       setAvailables,
@@ -132,7 +140,9 @@ export const useRateStore = defineStore(
 
       convert,
       lastConvertDate,
+      resetConvertDate,
       isConverting,
+      setIsConverting,
 
       rate,
     };
