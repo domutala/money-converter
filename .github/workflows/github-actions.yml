@@ -16,13 +16,14 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            cd ${{ secrets.PROJECT_FOLDER}}/${{ github.ref_name }}/api
+            cd ${{ secrets.PROJECT_FOLDER}}
             sudo git pull
+
+            cd ${{ secrets.PROJECT_FOLDER}}/api
             sudo yarn
             sudo yarn build
 
-            cd ${{ secrets.PROJECT_FOLDER}}/${{ github.ref_name }}/webapp
-            sudo git pull
+            cd ${{ secrets.PROJECT_FOLDER}}/webapp
             sudo yarn
             sudo yarn build
 

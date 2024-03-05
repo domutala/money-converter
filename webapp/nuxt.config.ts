@@ -8,6 +8,8 @@ export default defineNuxtConfig({
     },
   },
 
+  ssr: false,
+
   components: [{ path: "@/components/ui", global: true, prefix: "ui" }],
 
   css: ["~/styles/index.scss", "@flaticon/flaticon-uicons/css/all/all.css"],
