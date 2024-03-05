@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { IRate } from "~/models";
+import type { IRate } from "~/models";
 import formatCurrency from "~/utils/formatCurrency";
 
 export const useRateStore = defineStore(

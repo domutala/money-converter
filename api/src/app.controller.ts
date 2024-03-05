@@ -11,7 +11,7 @@ export class AppController {
     @Query('from') from: string,
     @Query('value') value: string,
   ) {
-    return this.appService.convert(Number(value), from, to);
+    return this.appService.convert(value, from, to);
   }
 
   @Get('/rate')
