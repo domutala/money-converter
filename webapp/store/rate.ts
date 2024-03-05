@@ -6,6 +6,8 @@ export const useRateStore = defineStore(
   "rate",
   () => {
     const apiUrl = useRuntimeConfig().public.apiUrl;
+    console.log(apiUrl, "*****");
+
     const rate = ref<IRate>();
 
     const availables = ref<string[]>([]);
