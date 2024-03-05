@@ -5,11 +5,12 @@ import formatCurrency from "~/utils/formatCurrency";
 export const useRateStore = defineStore(
   "rate",
   () => {
+    const apiUrl = useRuntimeConfig().public.apiUrl;
     const rate = ref<IRate>();
 
     const availables = ref<string[]>([]);
     async function setAvailables() {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/rate`, {
+      const response = await fetch(`${apiUrl}/rate`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -79,9 +80,9 @@ export const useRateStore = defineStore(
         }
 
         if (from && tos.length && value) {
-          const url = `${
-            import.meta.env.VITE_API_URL
-          }?value=${value}&from=${from}&to=${tos.join(";")}`;
+          const url = `${apiUrl}?value=${value}&from=${from}&to=${tos.join(
+            ";"
+          )}`;
 
           const response = await fetch(url, {
             headers: {

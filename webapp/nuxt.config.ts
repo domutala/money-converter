@@ -2,6 +2,12 @@
 export default defineNuxtConfig({
   devtools: { enabled: true },
 
+  runtimeConfig: {
+    public: {
+      apiUrl: process.env.API_URL,
+    },
+  },
+
   components: [{ path: "@/components/ui", global: true, prefix: "ui" }],
 
   css: ["~/styles/index.scss", "@flaticon/flaticon-uicons/css/all/all.css"],
