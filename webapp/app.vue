@@ -9,13 +9,15 @@
       scroll-behavior="elevate"
     >
       <template v-slot:prepend>
-        <svg-icon name="logo" width="36" class="text-primary" />
+        <nuxt-link-locale :to="{ name: 'index' }">
+          <svg-icon
+            name="all/logo"
+            width="36"
+            height="36"
+            class="text-primary"
+          />
+        </nuxt-link-locale>
       </template>
-
-      <!-- <v-app-bar-title style="line-height: 1; font-size: 16px">
-        Money <br />
-        Manager
-      </v-app-bar-title> -->
 
       <template v-slot:append>
         <ui-lang-selecter />
