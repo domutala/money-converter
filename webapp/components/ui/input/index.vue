@@ -80,14 +80,13 @@ function onValueChange(value: string) {
       @update:model-value="onCurrencyChange"
       :model-value="rateStore.inputs[index].currency"
     >
-      <!-- v-model="currency" -->
       <template #chip="{ item }">
-        <v-img
-          :src="`/flag/${item.value}.svg`"
-          style="width: 24px; height: 24px; margin-right: 10px"
-        >
-          <template #error> </template>
-        </v-img>
+        <svg-icon
+          width="24"
+          height="24"
+          :name="`flag/${item.value}`"
+          class="mr-3"
+        />
         {{ item.value }}
       </template>
 
@@ -99,12 +98,12 @@ function onValueChange(value: string) {
           }"
         >
           <template #prepend>
-            <v-img
-              :src="`/flag/${item.value}.svg`"
-              style="width: 24px; height: 24px; margin-right: 10px"
-            >
-              <template #error> </template>
-            </v-img>
+            <svg-icon
+              width="24"
+              height="24"
+              :name="`flag/${item.value}`"
+              class="mr-3"
+            />
           </template>
 
           <template #title>
@@ -189,7 +188,7 @@ function onValueChange(value: string) {
       "
     >
       1 {{ rateStore.rate?.base }} =
-      {{ rateStore.rate.rates[rateStore.inputs[index].currency!] }}
+      {{ rateStore.rate.rates[rateStore.inputs[index].currency] }}
     </div>
   </div>
 </template>
