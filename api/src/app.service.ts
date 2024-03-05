@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { IRate } from 'models';
 
@@ -6,30 +6,38 @@ import { IRate } from 'models';
 export class AppService {
   constructor(private readonly httpService: HttpService) {}
 
-  async convert(value: number, from: string, to: string) {
-    const rate = await this.rate();
+  async convert(value: string, from: string, to: string) {
+    if (
+      typeof value !== 'string' ||
+      typeof from !== 'string' ||
+      typeof to !== 'string'
+    ) {
+      throw new HttpException('invalid data', HttpStatus.BAD_REQUEST);
+    }
 
+    const rate = await this.rate();
+    const _value = Number(value);
     const tos = to.split(';');
     const result: { [x: string]: number } = {};
 
     function _convert(to: string) {
       if (from === rate.base) {
         if (to === rate.base) {
-          return value;
+          return _value;
         } else if (rate.rates[to]) {
-          return value * rate.rates[to];
+          return _value * rate.rates[to];
         } else {
           throw `Rate for ${to} not found.`;
         }
       } else if (to === rate.base) {
         if (rate.rates[from]) {
-          return value / rate.rates[from];
+          return _value / rate.rates[from];
         } else {
           throw `Rate for ${from} not found.`;
         }
       } else {
         if (rate.rates[from] && rate.rates[to]) {
-          return (value / rate.rates[from]) * rate.rates[to];
+          return (_value / rate.rates[from]) * rate.rates[to];
         } else {
           throw `Rate for ${from} or ${to} not found.`;
         }
@@ -38,7 +46,7 @@ export class AppService {
 
     for (const to of tos) result[to] = _convert(to);
 
-    return result;
+    return { result, rate: await this.rate(from) };
   }
 
   async rate(base?: string) {
