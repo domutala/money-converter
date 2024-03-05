@@ -11,7 +11,6 @@
     "start:prod": "node .output/server/index.mjs"
   },
   "dependencies": {
-    "@flaticon/flaticon-uicons": "^3.1.0",
     "@nuxtjs/svg-sprite": "^1.0.2",
     "@pinia/nuxt": "^0.5.1",
     "currency-flags": "^4.0.7",

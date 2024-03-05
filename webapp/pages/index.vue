@@ -1,7 +1,18 @@
 <script lang="ts" setup>
+const { t } = useI18n({ useScope: "local" });
+
+useSeoMeta({
+  title: t("title"),
+  ogTitle: t("title"),
+  description: t("description"),
+  ogDescription: t("description"),
+});
+
 import useRateStore from "~/store/rate";
 const rateStore = useRateStore();
 </script>
+
+<i18n lang="json" src="./index.lang.json"></i18n>
 
 <template>
   <v-container style="max-width: 552px" class="my-10">

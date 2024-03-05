@@ -1,12 +1,23 @@
 <script lang="ts" setup>
+import type { VTextField } from "vuetify/components";
 import useRateStore from "~/store/rate";
 
 const props = defineProps({ index: { type: Number, required: true } });
 const { tm } = useI18n();
 
+const input = ref<VTextField>();
 const rateStore = useRateStore();
 const isFocused = ref(false);
 const textFilter = ref("");
+
+onMounted(() => {
+  if (
+    rateStore.inputs[props.index].main &&
+    rateStore.inputs[props.index].value
+  ) {
+    onValueChange(rateStore.inputs[props.index].value!, { withoutFocus: true });
+  }
+});
 
 const _rateFilters = computed(() => {
   const curencyLocales = tm("currency") as { [x: string]: string };
@@ -43,17 +54,22 @@ function onCurrencyChange(value: string | null) {
   const inputs = JSON.parse(JSON.stringify(rateStore.inputs));
   inputs[props.index].currency = value;
 
+  input.value?.focus();
+
   rateStore.incrementRanking(value);
   rateStore.setInputs(inputs);
   rateStore.convert();
 }
 
-function onValueChange(value: string) {
+function onValueChange(
+  value: string,
+  options: { withoutFocus?: boolean } = {}
+) {
   const result = formatCurrency(value);
   const inputs = JSON.parse(JSON.stringify(rateStore.inputs));
   inputs[props.index].value = result;
 
-  if (isFocused.value) {
+  if (isFocused.value || options.withoutFocus) {
     inputs[props.index].main = true;
     for (let i = 0; i < inputs.length; i++) {
       if (i !== props.index) inputs[i].main = false;
@@ -61,7 +77,7 @@ function onValueChange(value: string) {
   }
 
   rateStore.setInputs(inputs);
-  if (isFocused.value) rateStore.convert();
+  if (isFocused.value || options.withoutFocus) rateStore.convert();
 }
 </script>
 
@@ -80,6 +96,16 @@ function onValueChange(value: string) {
       @update:model-value="onCurrencyChange"
       :model-value="rateStore.inputs[index].currency"
     >
+      <template #no-data>
+        <div
+          class="py-16 text-center"
+          :style="{
+            width: rateStore.inputs[index].currency ? '310px' : '100%',
+          }"
+        >
+          {{ $t("noCurrencyFound") }}
+        </div>
+      </template>
       <template #chip="{ item }">
         <svg-icon width="24" height="24" :name="`${item.value}`" class="mr-3" />
         {{ item.value }}
@@ -137,6 +163,7 @@ function onValueChange(value: string) {
       hide-details
       @update:model-value="onValueChange"
       v-model:focused="isFocused"
+      ref="input"
     ></v-text-field>
 
     <div class="border-s" style="height: 56px; --v-border-opacity: 0.05">

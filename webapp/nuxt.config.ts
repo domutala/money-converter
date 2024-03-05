@@ -12,7 +12,7 @@ export default defineNuxtConfig({
 
   components: [{ path: "@/components/ui", global: true, prefix: "ui" }],
 
-  css: ["~/styles/index.scss", "@flaticon/flaticon-uicons/css/all/all.css"],
+  css: ["~/styles/index.scss"],
 
   modules: [
     "vuetify-nuxt-module",
@@ -24,6 +24,7 @@ export default defineNuxtConfig({
   ],
 
   i18n: {
+    baseUrl: "https://currencyx.domutala.com",
     strategy: "prefix",
     customRoutes: "config",
     defaultLocale: "en",
@@ -37,5 +38,9 @@ export default defineNuxtConfig({
       cookieKey: "i18n_redirected",
       redirectOn: "root",
     },
+  },
+
+  site: {
+    name: "Currencyx",
   },
 });
