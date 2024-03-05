@@ -8,7 +8,7 @@ export default defineNuxtConfig({
     },
   },
 
-  ssr: false,
+  ssr: true,
 
   components: [{ path: "@/components/ui", global: true, prefix: "ui" }],
 
