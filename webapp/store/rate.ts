@@ -6,13 +6,11 @@ export const useRateStore = defineStore(
   "rate",
   () => {
     const apiUrl = useRuntimeConfig().public.apiUrl;
-    console.log(apiUrl, "*****");
-
     const rate = ref<IRate>();
 
     const availables = ref<string[]>([]);
     async function setAvailables() {
-      const response = await fetch(`${apiUrl}/rate`, {
+      const response = await fetch(`${apiUrl}/api/rate`, {
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
@@ -24,7 +22,7 @@ export const useRateStore = defineStore(
     onMounted(setAvailables);
 
     const inputs = ref<{ currency?: string; value?: string; main?: boolean }[]>(
-      [{ main: true }]
+      [{ currency: "XOF", main: true }, { currency: "GMD" }]
     );
     function setInputs(
       value: { currency: string; value?: string; main: boolean }[]
@@ -82,7 +80,7 @@ export const useRateStore = defineStore(
         }
 
         if (from && tos.length && value) {
-          const url = `${apiUrl}?value=${value}&from=${from}&to=${tos.join(
+          const url = `${apiUrl}/api?value=${value}&from=${from}&to=${tos.join(
             ";"
           )}`;
 
