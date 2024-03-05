@@ -81,12 +81,7 @@ function onValueChange(value: string) {
       :model-value="rateStore.inputs[index].currency"
     >
       <template #chip="{ item }">
-        <svg-icon
-          width="24"
-          height="24"
-          :name="`flag/${item.value}`"
-          class="mr-3"
-        />
+        <svg-icon width="24" height="24" :name="`${item.value}`" class="mr-3" />
         {{ item.value }}
       </template>
 
@@ -101,7 +96,7 @@ function onValueChange(value: string) {
             <svg-icon
               width="24"
               height="24"
-              :name="`flag/${item.value}`"
+              :name="`${item.value}`"
               class="mr-3"
             />
           </template>
