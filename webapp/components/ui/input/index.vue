@@ -88,6 +88,7 @@ function onValueChange(
       hide-spin-buttons
       flat
       :variant="rateStore.inputs[index].currency ? 'solo-filled' : 'solo'"
+      bg-color="transparent"
       rounded="lg"
       :style="{ width: rateStore.inputs[index].currency ? '140px' : '100%' }"
       :menu-props="{ class: 'ui-input--select-content border', offset: '5px' }"
@@ -164,6 +165,7 @@ function onValueChange(
       @update:model-value="onValueChange"
       v-model:focused="isFocused"
       ref="input"
+      bg-color="transparent"
     ></v-text-field>
 
     <div class="border-s" style="height: 56px; --v-border-opacity: 0.05">

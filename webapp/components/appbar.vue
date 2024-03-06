@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import ThemeSwitcher from "./theme-switcher.vue";
+</script>
 
 <template>
   <v-app-bar
@@ -6,6 +8,7 @@
     elevation="0"
     style="position: sticky"
     scroll-behavior="elevate"
+    color="background"
   >
     <template v-slot:prepend>
       <nuxt-link-locale :to="{ name: 'index' }">
@@ -14,6 +17,7 @@
     </template>
 
     <template v-slot:append>
+      <theme-switcher />
       <ui-lang-selecter />
     </template>
   </v-app-bar>

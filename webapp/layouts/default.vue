@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import Appbar from "~/components/ui/appbar.vue";
+import Appbar from "~/components/appbar.vue";
 
 const head = useLocaleHead({
   addDirAttribute: true,
@@ -28,7 +28,7 @@ const head = useLocaleHead({
 
     <slot />
 
-    <v-footer color="bg-indigo-lighten-1 d-flex flex-column justify-end">
+    <v-footer class="d-flex flex-column justify-end" color="background">
       <div class="mb-5 mt-5">© {{ new Date().getFullYear() }}</div>
     </v-footer>
   </v-app>
