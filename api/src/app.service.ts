@@ -1,6 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { IRate } from 'models';
+import { readFileSync } from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class AppService {
@@ -67,5 +69,13 @@ export class AppService {
     }
 
     return rate;
+  }
+
+  async countries() {
+    const countries = readFileSync(
+      join(process.cwd(), 'countries.json'),
+      'utf-8',
+    );
+    return JSON.parse(countries);
   }
 }

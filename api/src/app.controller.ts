@@ -18,4 +18,9 @@ export class AppController {
   rate(@Query('base') base: string) {
     return this.appService.rate(base);
   }
+
+  @Get('/api/countries')
+  countries() {
+    return this.appService.countries();
+  }
 }
