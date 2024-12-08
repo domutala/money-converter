@@ -49,6 +49,8 @@ const _rateFilters = computed(() => {
 });
 
 function onCurrencyChange(value: string | null) {
+  console.log(value);
+
   if (!value) return;
 
   const inputs = JSON.parse(JSON.stringify(rateStore.inputs));
@@ -83,8 +85,7 @@ function onValueChange(
 
 <template>
   <div class="ui-input border rounded-lg">
-    <v-select
-      hide-details
+    <!-- hide-details
       hide-spin-buttons
       flat
       :variant="rateStore.inputs[index].currency ? 'solo-filled' : 'solo'"
@@ -95,66 +96,118 @@ function onValueChange(
       :items="_rateFilters"
       placeholder="Selectionnez une monaie"
       @update:model-value="onCurrencyChange"
-      :model-value="rateStore.inputs[index].currency"
-    >
-      <template #no-data>
-        <div
-          class="py-16 text-center"
-          :style="{
-            width: rateStore.inputs[index].currency ? '310px' : '100%',
-          }"
-        >
-          {{ $t("noCurrencyFound") }}
-        </div>
-      </template>
-      <template #chip="{ item }">
-        <svg-icon width="24" height="24" :name="`${item.value}`" class="mr-3" />
-        {{ item.value }}
-      </template>
+      :model-value="rateStore.inputs[index].currency" -->
+    <v-dialog max-width="442">
+      <template #activator="{ props }">
+        <!-- {{ inputs[props.index].currency }} -->
 
-      <template v-slot:item="{ props, item }">
-        <v-list-item
+        <v-btn
           v-bind="props"
-          :style="{
-            width: rateStore.inputs[index].currency ? '310px' : '100%',
-          }"
+          variant="text"
+          icon
+          rounded="0"
+          height="58"
+          width="72"
         >
-          <template #prepend>
-            <svg-icon
-              width="24"
-              height="24"
-              :name="`${item.value}`"
-              class="mr-3"
-            />
-          </template>
-
-          <template #title>
-            {{ item.value }} — {{ $t(`currency.${item.value}`) }}
-          </template>
-        </v-list-item>
+          <svg-icon
+            v-if="rateStore.inputs[index]?.currency"
+            width="32"
+            height="32"
+            :name="rateStore.inputs[index].currency"
+          />
+        </v-btn>
       </template>
-
-      <template #prepend-item>
-        <div
-          class="pa-2 bg-background border-b"
-          style="position: sticky; top: 0; z-index: 10"
-        >
-          <v-text-field
-            variant="outlined"
-            placeholder="Rechercher"
-            v-model="textFilter"
-            hide-details
+      <template #default="{ isActive }">
+        <!-- <template #no-data>
+          <div
+            class="py-16 text-center"
+            :style="{
+              width: rateStore.inputs[index].currency ? '310px' : '100%',
+            }"
           >
-            <template #prepend-inner>
-              <i class="fi fi-rr-search mr-2" style="font-size: 18px"></i>
+            {{ $t("noCurrencyFound") }}
+          </div>
+        </template>
+        <template #chip="{ item }">
+          <svg-icon
+            width="24"
+            height="24"
+            :name="`${item.value}`"
+            class="mr-3"
+          />
+          {{ item.value }}
+        </template> -->
+
+        <v-card rounded="lg" border>
+          <div
+            class="pa-2 bg-background border-b"
+            style="position: sticky; top: 0; z-index: 10"
+          >
+            <v-text-field
+              variant="outlined"
+              placeholder="Rechercher"
+              v-model="textFilter"
+              hide-details
+            >
+              <template #prepend-inner>
+                <i class="fi fi-rr-search mr-2" style="font-size: 18px"></i>
+              </template>
+            </v-text-field>
+          </div>
+
+          <v-virtual-scroll height="100%" :items="_rateFilters">
+            <template #default="{ item, index }">
+              <v-list-item
+                :key="i"
+                class="bg-background"
+                height="62"
+                @click="
+                  onCurrencyChange(item);
+                  isActive.value = false;
+                "
+              >
+                <!-- :style="{
+              width: rateStore.inputs[index].currency ? '310px' : '100%',
+            }" -->
+                <template #prepend>
+                  <svg-icon
+                    width="24"
+                    height="24"
+                    :name="`${item}`"
+                    class="mr-3"
+                  />
+                </template>
+
+                <template #title>
+                  {{ item }} — {{ $t(`currency.${item}`) }}
+                </template>
+              </v-list-item>
             </template>
-          </v-text-field>
-        </div>
+          </v-virtual-scroll>
+        </v-card>
+
+        <!-- <template #prepend-item>
+          <div
+            class="pa-2 bg-background border-b"
+            style="position: sticky; top: 0; z-index: 10"
+          >
+            <v-text-field
+              variant="outlined"
+              placeholder="Rechercher"
+              v-model="textFilter"
+              hide-details
+            >
+              <template #prepend-inner>
+                <i class="fi fi-rr-search mr-2" style="font-size: 18px"></i>
+              </template>
+            </v-text-field>
+          </div>
+        </template> -->
       </template>
-    </v-select>
+    </v-dialog>
 
     <v-text-field
-      v-if="rateStore.inputs[index].currency"
+      v-if="rateStore.inputs[index]?.currency"
       variant="solo"
       placeholder="0.00"
       inputmode="decimal"

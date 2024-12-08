@@ -11,14 +11,13 @@ import ThemeSwitcher from "./theme-switcher.vue";
     color="background"
   >
     <template v-slot:prepend>
-      <nuxt-link-locale :to="{ name: 'index' }">
-        <svg-icon name="logo" width="36" height="36" class="text-primary" />
+      <nuxt-link-locale
+        :to="{ name: 'index' }"
+        class="d-flex align-center ga-2 text-decoration-none"
+      >
+        <img src="/logo.png" style="width: 42px" />
+        <div class="font-weight-bold text-h6 text-dark">weConvert</div>
       </nuxt-link-locale>
-    </template>
-
-    <template v-slot:append>
-      <theme-switcher />
-      <ui-lang-selecter />
     </template>
   </v-app-bar>
 </template>

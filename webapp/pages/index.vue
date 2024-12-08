@@ -28,8 +28,9 @@ const rateStore = useRateStore();
       @click="() => rateStore.addInput()"
       class="mt-2"
       color="primary"
-      variant="tonal"
+      variant="flat"
       flat
+      rounded
     >
       <v-icon icon="mdi-plus" />
       <div style="font-size: 12px; margin-left: 10px; text-transform: none">

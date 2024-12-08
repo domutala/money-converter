@@ -9,8 +9,8 @@ const i18n = useI18n();
         v-bind="props"
         prepend-icon="mdi-translate"
         rounded="lg"
-        variant="tonal"
-        color="primary"
+        variant="flat"
+        color="dark"
       >
         <div style="text-transform: none">
           {{ $i18n.localeProperties.name }}

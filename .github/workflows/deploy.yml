@@ -1,0 +1,48 @@
+name: Deploy Webapp
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: copy file via ssh
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: 22
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "."
+          target: ${{ secrets.FOLDER }}
+          rm: true
+          overwrite: true
+
+      - name: Create secrets files
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          port: 22
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "${{ secrets.DOT_ENV_FILE }}" > ${{ secrets.FOLDER }}/.env
+
+    #   - name: deploy webapp
+    #     uses: appleboy/ssh-action@v0.1.8
+    #     with:
+    #       host: ${{ secrets.SSH_HOST }}
+    #       username: ${{ secrets.SSH_USER }}
+    #       port: 22
+    #       key: ${{ secrets.SSH_PRIVATE_KEY }}
+    #       script: |
+    #         cd ${{ secrets.FOLDER }}
+    #         docker-compose down                 # Arrête les conteneurs existants (si nécessaire)
+    #         docker-compose up -d --build        # Construit et démarre les conteneurs en arrière-plan
